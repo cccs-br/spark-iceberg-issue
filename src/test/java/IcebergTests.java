@@ -1,6 +1,3 @@
-import static org.apache.spark.sql.functions.col;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -8,13 +5,16 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class IcebergTest {
+import static org.apache.spark.sql.functions.col;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class IcebergTests {
 
     @BeforeAll
     static void setup() {
-        if(!Files.exists(Path.of("warehouse"))) {
+        if(!Files.exists(Paths.get("warehouse"))) {
             IcebergTestUtil.createTable();
             IcebergTestUtil.loadTable();
         }
@@ -45,7 +45,6 @@ public class IcebergTest {
         );
         assertEquals(df.count(), 59);
     }
-
 
     @Test
     void filter_iceberg_c1_ok() {
