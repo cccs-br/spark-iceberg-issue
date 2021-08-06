@@ -62,7 +62,7 @@ public class IcebergTests {
     @Test
     void filter_iceberg_c2_error() {
         SparkSession spark = IcebergTestUtil.createSession();
-        byte[] crit = IcebergTestUtil.ipv6ToBytes("6540:cf5b:fed2:100e:71f1:ae06:76d4:c2f"));
+        byte[] crit = IcebergTestUtil.ipv6ToBytes("6540:cf5b:fed2:100e:71f1:ae06:76d4:c2f");
         Dataset<Row> df = spark.sql("select * from iceberg.ipv6").where(
                 col("ip_bytes").$greater(crit)
         );
