@@ -26,9 +26,7 @@ public class IcebergTests {
     void query_all() {
         SparkSession spark = IcebergTestUtil.createSession();
         Dataset<Row> df = spark.sql("select * from iceberg.ipv6");
-        df.printSchema();
-        df.show();
-//        assertEquals(df.count(), 102);
+        assertEquals(df.count(), 102);
     }
 
     @Test
