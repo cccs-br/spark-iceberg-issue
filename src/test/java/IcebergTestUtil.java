@@ -23,7 +23,6 @@ public class IcebergTestUtil {
         spark.udf().register("ipv6_to_bytes", ipv6ToBytesUdf());
     }
 
-
     public static SparkSession createSession() {
         SparkSession spark = SparkSession.builder().master("local")
                 .appName("iceberg.test")
@@ -43,7 +42,7 @@ public class IcebergTestUtil {
                 .csv("src/test/resources/ipv6_addresses_header.txt")
                 .withColumn("ip_bytes", ipv6UDF.apply(col("ip_string")));
         df.printSchema();
-        spark.sql(String.format("CREATE TABLE iceberg.ipv6 (%s)", df.schema().toDDL()));
+        spark.sql(String.format("CREATE TABLE iceberg.ipv6 (%s) USING iceberg", df.schema().toDDL()));
     }
 
     public static void loadTable() {
