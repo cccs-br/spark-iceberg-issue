@@ -42,7 +42,7 @@ public class IcebergTestUtil {
                 .csv("src/test/resources/ipv6_addresses_header.txt")
                 .withColumn("ip_bytes", ipv6UDF.apply(col("ip_string")));
         df.printSchema();
-        spark.sql(String.format("CREATE TABLE iceberg.ipv6 (%s) USING iceberg", df.schema().toDDL()));
+        spark.sql(String.format("CREATE TABLE iceberg.db.ipv6 (%s) USING iceberg", df.schema().toDDL()));
     }
 
     public static void loadTable() {
@@ -51,12 +51,12 @@ public class IcebergTestUtil {
         Dataset<Row> df = spark.read().option("header", true)
                 .csv("src/test/resources/ipv6_addresses_header.txt")
                 .withColumn("ip_bytes", ipv6UDF.apply(col("ip_string")));
-        df.write().mode("overwrite").insertInto("iceberg.ipv6");
+        df.write().mode("overwrite").insertInto("iceberg.db.ipv6");
     }
 
     public static void queryTable() {
         SparkSession spark = createSession();
-        spark.sql("select * from iceberg.ipv6").show();
+        spark.sql("select * from iceberg.db.ipv6").show();
     }
 
 }
